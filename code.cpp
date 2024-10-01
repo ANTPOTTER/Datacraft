@@ -36,18 +36,44 @@ std::string replace(std::string str, const std::string& oldSubstr, const std::st
     return str;
 }
 
-std::vector<std::string> code_words(std::vector<std::string> program_vector, int program_count) {
+std::vector<std::string> code_words(std::vector<std::string> program_vector, int program_count, std::vector<std::string> commands_vector, int commands_count) {
     char valid_nums[11] = {'~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
     program_vector[program_count];
+
+    
     if ((program_vector[program_count] == "if") && (program_vector[program_count + 2] == "==")) {
-        if (program_vector[program_count + 1] == "block") {
+        if (program_vector[program_count + 1] == "coordinates") {
 
         }
-    else if (program_vector[program_count + 2].find(valid_nums) != std::string::npos) {
+    }
+    else if ((program_vector[program_count] == "if") && (program_vector[program_count + 2].find(valid_nums) != std::string::npos)) {
 
     }
+
+    else if (program_vector[program_count] == "else") {
+
     }
-    // Else, Range, Var, Print, Sleep, Random, Version, Anchor, Spawn, @(Const), Range(Coordinates)
+
+    else if (program_vector[program_count] == "print") {
+
+    }
+
+    else if (program_vector[program_count] == "sleep") {
+
+    }
+
+    else if (program_vector[program_count] == "random") {
+
+    }
+
+    else if (program_vector[program_count] == "@") {
+
+    }
+
+    else if (program_vector[program_count] == "range") {
+
+    }
+    // Var, Version, Anchor, Spawn, @(Const, droppless), Range(Coordinates)
 }
 
 int main(int argc, char* argv[]) {
@@ -89,13 +115,6 @@ int main(int argc, char* argv[]) {
         
         program_count += 1;
     }
-
-
-
-
-
-
-
 
 
 
