@@ -50,7 +50,7 @@ You can write to the minecraft chat with `print()`. inside a print statement. `p
 Delay can be created with `sleep()`, a number must be put in the brackets, if no number is used it will default to 1. you may also choose between ticks, real-life seconds, real-life hours, and ingame days. This is chosen with t (which can be ommited), s, h, d in that respective order. 
 
 ## Random Numbers
-from version `1.20.4` onwards, `random()` may be used. to pick a random number within 1 to 6, the syntax is `random(1, 6)`
+from version `1.20.4` onwards, `random()` may be used to pick a random number within 1 to 6, the syntax is `random(1, 6)`
 
 ## Attributes
 if you have `@const` before a line of code, it will run every single tick.
