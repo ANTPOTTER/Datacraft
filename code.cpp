@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <sstream>
+#include <sstream>  
 #include <filesystem>
 #include <algorithm>
 #include <vector>
@@ -36,6 +36,77 @@ std::string replace(std::string str, const std::string& oldSubstr, const std::st
     return str;
 }
 
+
+std::string processVectorUntilChar(const std::vector<std::string>& vec, size_t startIndex, std::string targetChar) {
+    std::string result;
+    for (size_t i = startIndex; i < vec.size(); ++i) {
+        if ((vec[i] == targetChar) && (vec[i-1] != "\\")) {
+            break;
+        }
+        result += vec[i];
+    }
+
+    return result;
+}
+
+int command_count() {
+    static int counter = 0;
+    return counter++;
+}
+
+std::string command_creation(int command_type, std::string content, int program_counter) {
+    static std::string commands;
+    // Version
+    if (command_type = 0) {
+
+    }
+    // Anchor
+    else if (command_type = 1) {
+
+    }
+
+    // Spawn
+    else if (command_type = 2) {
+
+    }
+
+    // IF
+    else if (command_type = 3) {
+
+    }
+
+    // Else
+    else if (command_type = 4) {
+
+    }
+
+    // Print
+    else if (command_type = 5) {
+        int temp;
+        temp << command_count();
+        std::string temp2 = std::to_string(temp);
+        std::string command_temp = "say " + content;
+        std::string command_temp1 = "\\nfunction funcs:" + temp2;
+        if (program_counter < 1) {
+            commands += command_temp + command_temp1;
+        }
+        else {
+            commands += "\\n" + command_temp + command_temp1;
+        }
+    }
+
+    // Sleep
+    else if (command_type = 6) {
+
+    }
+
+    // Random
+    else if (command_type = 7) {
+
+    }
+
+}
+
 std::vector<std::string> code_words(std::vector<std::string> program_vector, int program_count, std::vector<std::string> commands_vector, int commands_count) {
     char valid_nums[11] = {'~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
     program_vector[program_count];
@@ -59,7 +130,10 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
         if (program_vector[program_count + 1] == "(") {
             if (program_vector[program_count + 2] == "str") {
                 if (program_vector[program_count + 3] == "(") {
-                    
+                    std::vector<std::string> temp_vector;
+                    temp_vector.erase(temp_vector.begin(), temp_vector.begin() + program_count+3);
+                    std::string say_content = processVectorUntilChar(temp_vector, program_count+3, ")");
+                    command_creation(5, say_content, program_count);
                 }
             }
         }
