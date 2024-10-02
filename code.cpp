@@ -39,7 +39,8 @@ std::string replace(std::string str, const std::string& oldSubstr, const std::st
 std::vector<std::string> code_words(std::vector<std::string> program_vector, int program_count, std::vector<std::string> commands_vector, int commands_count) {
     char valid_nums[11] = {'~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
     program_vector[program_count];
-
+    int next_func_num;
+    std::string next_func = "function functions:";
     
     if ((program_vector[program_count] == "if") && (program_vector[program_count + 2] == "==")) {
         if (program_vector[program_count + 1] == "coordinates") {
@@ -47,7 +48,7 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
         }
     }
     else if ((program_vector[program_count] == "if") && (program_vector[program_count + 2].find(valid_nums) != std::string::npos)) {
-
+        
     }
 
     else if (program_vector[program_count] == "else") {
@@ -55,7 +56,13 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
     }
 
     else if (program_vector[program_count] == "print") {
-
+        if (program_vector[program_count + 1] == "(") {
+            if (program_vector[program_count + 2] == "str") {
+                if (program_vector[program_count + 3] == "(") {
+                    
+                }
+            }
+        }
     }
 
     else if (program_vector[program_count] == "sleep") {
