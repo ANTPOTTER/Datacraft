@@ -56,99 +56,93 @@ int command_count() {
 
 std::string command_creation(int command_type, std::string content, int program_counter) {
     int temp;
-    temp << command_count();
-    std::string temp2 = std::to_string(temp);
+    command_formatting << command_count();
+    std::string command_formatted = std::to_string(command_formatting);
     std::string command_temp;
     std::string command_temp1;
 
     static std::string commands;
 
-    // Version
-    if (command_type = 0) {
 
-    }
-    // Anchor
-    else if (command_type = 1) {
+    switch(command_type) {
+        // Version
+        case 0:
+            
+            break;
+        
+        // Anchor
+        case 1:
 
-    }
+            break;
 
-    // Spawn
-    else if (command_type = 2) {
+        // Spawn
+        case 2:
 
-    }
+            break;
 
-    // IF
-    else if (command_type = 3) {
+        // If
+        case 3:
+            pass
+            break;
 
-    }
+        // Else
+        case 4:
 
-    // Else
-    else if (command_type = 4) {
+            break;
 
-    }
+        // Print
+        case 5:
+            command_temp = "say " + content;
+            command_temp1 = "\\nfunction funcs:" + temp;
+            if (program_counter < 1) {
+                commands += command_temp + "//nfunction funcs:1";
+            }
+            else {
+                commands += "\\n" + command_temp + command_temp1;
+            }
+            temp = 0;
+            temp1 = "";
+            command_temp = "";
+            command_temp1 = "";
+            break;
 
-    // Print
-    else if (command_type = 5) {
-        command_temp = "say " + content;
-        command_temp1 = "\\nfunction funcs:" + temp2;
-        if (program_counter < 1) {
-            commands += command_temp + command_temp1;
-        }
-        else {
-            commands += "\\n" + command_temp + command_temp1;
-        }
-        temp = 0;
-        temp2 = "";
+        // Sleep
+        case 6:
+            temp1 = content.back();
+            content.rbegin();
+            content = content.back();
+    
+            if (program_counter < 1) {
+                if (!content) {
+                    command_temp = "schedule function func:1" +content + "t append";
+                }
+                else {
+                    command_temp = "schedule function func:1" content + temp + "append";
+                }
+            }
+            else {
+                if (!content) {
+                    command_temp = "schedule function func:" + command_formatted + content + "t append";
+                }
+                else {
+                    command_temp = "schedule function func:" + command_formatted + content + temp1 + "append";
+                }
+            }
+        commands += "//n" command_temp;
+        
         command_temp = "";
-        command_temp1 = "";
+        command_temp1 =  "";
+        temp = 0;
+        temp1 = "";
+            break;
+
+        // Random
+        case 7:
+        
+            break;
     }
+    
 
-    // Sleep
-    else if (command_type = 6) {
-        temp2 = content.back();
-        content.rbegin();
-        content = content.back();
-
-        if (program_counter < 1) {
-            if (temp2 == "t") {
-                command_temp = "schedule function func:1" + content + temp2 + "append";
-            }
-            else if (temp2 == "s") {
-                command_temp = "schedule function func:1" + content + temp2 + "append";
-            }
-            else if (temp2 == "h") {
-                command_temp = "schedule function func:1" + content + temp2 + "append";
-            }
-            else if (temp2 == "d") {
-                command_temp = "schedule function func:1" + content + temp2 + "append";
-            }
-            else if (temp2 == "") {
-                command_temp = "schedule function func:1" + content + "t" + "append";
-            }
-        }
-        else {
-            if (content == "t") {
-                command_temp = "schedule function func:1" + content + temp2 + "append";
-            }
-            else if (content == "s") {
-                command_temp = "schedule function func:1" + content + temp2 + "append";
-            }
-            else if (content == "h") {
-                command_temp = "schedule function func:1" + content + temp2 + "append";
-            }
-            else if (content == "d") {
-                command_temp = "schedule function func:1" + content + temp2 + "append";
-            }
-            else if (content == "") {
-                command_temp = "schedule function func:1" + content + "t" + "append";
-            }
-
-        }
-    }
-    // Random
-    else if (command_type = 7) {
-
-    }
 
 }
 
@@ -157,6 +151,37 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
     program_vector[program_count];
     int next_func_num;
     std::string next_func = "function functions:";
+
+    switch (program_vector[program_count]) {
+        case "if":
+
+            break;
+
+        case "else":
+
+            break;
+
+        case "print";
+
+            break;
+
+        case "sleep":
+
+            break;
+
+        case "random":
+
+            break;
+
+        case "@":
+
+            break;
+
+        case "range":
+
+            break;
+    }
+
     
     if ((program_vector[program_count] == "if") && (program_vector[program_count + 2] == "==")) {
         if (program_vector[program_count + 1] == "coordinates") {
@@ -164,7 +189,12 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
         }
     }
     else if ((program_vector[program_count] == "if") && (program_vector[program_count + 2].find(valid_nums) != std::string::npos)) {
-        
+        if (program_vector[program_count + 1] == "("; {
+            if (program_vector[program_count + 2] == "str") {
+                
+            }
+            else if 
+        }
     }
 
     else if (program_vector[program_count] == "else") {
