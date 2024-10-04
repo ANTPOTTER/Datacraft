@@ -55,7 +55,14 @@ int command_count() {
 }
 
 std::string command_creation(int command_type, std::string content, int program_counter) {
+    int temp;
+    temp << command_count();
+    std::string temp2 = std::to_string(temp);
+    std::string command_temp;
+    std::string command_temp1;
+
     static std::string commands;
+
     // Version
     if (command_type = 0) {
 
@@ -82,24 +89,62 @@ std::string command_creation(int command_type, std::string content, int program_
 
     // Print
     else if (command_type = 5) {
-        int temp;
-        temp << command_count();
-        std::string temp2 = std::to_string(temp);
-        std::string command_temp = "say " + content;
-        std::string command_temp1 = "\\nfunction funcs:" + temp2;
+        command_temp = "say " + content;
+        command_temp1 = "\\nfunction funcs:" + temp2;
         if (program_counter < 1) {
             commands += command_temp + command_temp1;
         }
         else {
             commands += "\\n" + command_temp + command_temp1;
         }
+        temp = 0;
+        temp2 = "";
+        command_temp = "";
+        command_temp1 = "";
     }
 
     // Sleep
     else if (command_type = 6) {
+        temp2 = content.back();
+        content.rbegin();
+        content = content.back();
 
+        if (program_counter < 1) {
+            if (temp2 == "t") {
+                command_temp = "schedule function func:1" + content + temp2 + "append";
+            }
+            else if (temp2 == "s") {
+                command_temp = "schedule function func:1" + content + temp2 + "append";
+            }
+            else if (temp2 == "h") {
+                command_temp = "schedule function func:1" + content + temp2 + "append";
+            }
+            else if (temp2 == "d") {
+                command_temp = "schedule function func:1" + content + temp2 + "append";
+            }
+            else if (temp2 == "") {
+                command_temp = "schedule function func:1" + content + "t" + "append";
+            }
+        }
+        else {
+            if (content == "t") {
+                command_temp = "schedule function func:1" + content + temp2 + "append";
+            }
+            else if (content == "s") {
+                command_temp = "schedule function func:1" + content + temp2 + "append";
+            }
+            else if (content == "h") {
+                command_temp = "schedule function func:1" + content + temp2 + "append";
+            }
+            else if (content == "d") {
+                command_temp = "schedule function func:1" + content + temp2 + "append";
+            }
+            else if (content == "") {
+                command_temp = "schedule function func:1" + content + "t" + "append";
+            }
+
+        }
     }
-
     // Random
     else if (command_type = 7) {
 
@@ -140,7 +185,12 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
     }
 
     else if (program_vector[program_count] == "sleep") {
-
+        if (program_vector[program_count + 1] == "(") {
+            if (program_vector[program_count + 3] == ")") {
+                std::string contents = program_vector[program_count + 2];
+                command_creation(6, contents, program_count);
+            }
+        }
     }
 
     else if (program_vector[program_count] == "random") {
