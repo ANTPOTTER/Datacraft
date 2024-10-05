@@ -56,10 +56,13 @@ int command_count() {
 
 std::string command_creation(int command_type, std::string content, int program_counter) {
     int temp;
+    int command_formatting;
     command_formatting << command_count();
     std::string command_formatted = std::to_string(command_formatting);
     std::string command_temp;
     std::string command_temp1;
+
+    std::string temp1;
 
     static std::string commands;
 
@@ -92,11 +95,12 @@ std::string command_creation(int command_type, std::string content, int program_
             // 25: 24w05a - 24w05b
             // 26: 24w06a - 24w07
             // 28: 24w09a - 24w10a
-            // 29: 
-            // 30: 
-            // 31: 
-            // 32: 
-            // 34: 
+            // 29: 24w11a
+            // 30: 24w12a
+            // 31: 24w13a - 1.20.5-pre3
+            // 32: 1.20.5-pre4 - 1.20.5
+            // 34: 1.21 - onwards
+            
             // LINK: https://minecraft.fandom.com/wiki/Pack_format
             break;
         
@@ -112,7 +116,7 @@ std::string command_creation(int command_type, std::string content, int program_
 
         // If
         case 3:
-            pass
+
             break;
 
         // Else
@@ -143,22 +147,23 @@ std::string command_creation(int command_type, std::string content, int program_
             content = content.back();
     
             if (program_counter < 1) {
-                if (!content) {
+                if (content == "") {
                     command_temp = "schedule function func:1" +content + "t append";
                 }
                 else {
-                    command_temp = "schedule function func:1" content + temp + "append";
+                    std::string temp = std::string(temp);
+                    command_temp = "schedule function func:1" + content + temp + "append";
                 }
             }
             else {
-                if (!content) {
+                if (content == "") {
                     command_temp = "schedule function func:" + command_formatted + content + "t append";
                 }
                 else {
                     command_temp = "schedule function func:" + command_formatted + content + temp1 + "append";
                 }
             }
-        commands += "//n" command_temp;
+        commands += "//n" + command_temp;
         
         command_temp = "";
         command_temp1 =  "";
@@ -182,57 +187,66 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
     int next_func_num;
     std::string next_func = "function functions:";
 
-    switch (program_vector[program_count]) {
-        case "if":
-            if (program_vector[program_count + 2].find(valid_nums) != std::string::npos)) {
-        if (program_vector[program_count + 1] == "("; {
-            if (program_vector[program_count + 2] == "str") {
-                
-            }
-        }
-    }
-            break;
-
-        case "else":
-
-            break;
-
-        case "print";
-            if (program_vector[program_count + 1] == "(") {
-            if (program_vector[program_count + 2] == "str") {
-                if (program_vector[program_count + 3] == "(") {
-                    std::vector<std::string> temp_vector;
-                    temp_vector.erase(temp_vector.begin(), temp_vector.begin() + program_count+3);
-                    std::string say_content = processVectorUntilChar(temp_vector, program_count+3, ")");
-                    command_creation(5, say_content, program_count);
+    std::string switch_var = program_vector[program_count];
+    
+        // IF
+        if (program_vector[program_count] == "if") {
+            if (program_vector[program_count + 2].find(valid_nums) != std::string::npos) {
+                if (program_vector[program_count + 1] == "(") {
+                    if (program_vector[program_count + 2] == "str") {
+                        
+                    }
                 }
             }
         }
-            break;
 
-        case "sleep":
+        // ELSE
+        if (program_vector[program_count] == "else") {
+
+        }
+
+        // PRINT
+        if (program_vector[program_count] == "print") {
             if (program_vector[program_count + 1] == "(") {
-            if (program_vector[program_count + 3] == ")") {
-                std::string contents = program_vector[program_count + 2];
-                command_creation(6, contents, program_count);
+                if (program_vector[program_count + 2] == "str") {
+                    if (program_vector[program_count + 3] == "(") {
+                        std::vector<std::string> temp_vector;
+                        temp_vector.erase(temp_vector.begin(), temp_vector.begin() + program_count+3);
+                          std::string say_content = processVectorUntilChar(temp_vector, program_count+3, ")");
+                        command_creation(5, say_content, program_count);
+                    }
+                }
             }
         }
-            break;
 
-        case "random":
+        // SLEEP
+        if (program_vector[program_count] == "sleep") {
+            if (program_vector[program_count + 1] == "(") {
+                if (program_vector[program_count + 3] == ")") {
+                    std::string contents = program_vector[program_count + 2];
+                    command_creation(6, contents, program_count);
+                }
+            }
+        }
 
-            break;
+        // RANDOM
+        if (program_vector[program_count] == "random") {
 
-        case "@":
+        }
 
-            break;
+        // @
+        if (program_vector[program_count] == "@") {
 
-        case "range":
+        }
 
-            break;
+        // RANGE
+        if (program_vector[program_count] == "range") {
+
+        }
+
     }
     // Var, Version, Anchor, Spawn, @(Const, droppless), Range(Coordinates)
-}
+
 
 
 
