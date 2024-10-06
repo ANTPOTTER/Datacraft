@@ -192,11 +192,7 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
         // IF
         if (program_vector[program_count] == "if") {
             if (program_vector[program_count + 2].find(valid_nums) != std::string::npos) {
-                if (program_vector[program_count + 1] == "(") {
-                    if (program_vector[program_count + 2] == "str") {
-                        
-                    }
-                }
+                
             }
         }
 
