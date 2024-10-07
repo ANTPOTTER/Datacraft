@@ -37,6 +37,7 @@ std::string replace(std::string str, const std::string& oldSubstr, const std::st
 }
 
 
+
 std::string processVectorUntilChar(const std::vector<std::string>& vec, size_t startIndex, std::string targetChar) {
     std::string result;
     for (size_t i = startIndex; i < vec.size(); ++i) {
@@ -48,6 +49,10 @@ std::string processVectorUntilChar(const std::vector<std::string>& vec, size_t s
 
     return result;
 }
+std::string processstringuntilclose(const std::vector<std::string>& vec, int startIndex, std::string ) {
+
+}
+
 
 int command_count() {
     static int counter = 0;
@@ -192,7 +197,10 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
         // IF
         if (program_vector[program_count] == "if") {
             if (program_vector[program_count + 2].find(valid_nums) != std::string::npos) {
-                
+                if (program_vector[program_count + 1] == "(") {
+
+                    command_creation(3, "", 0);
+                }
             }
         }
 
