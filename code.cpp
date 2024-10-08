@@ -49,8 +49,38 @@ std::string processVectorUntilChar(const std::vector<std::string>& vec, size_t s
 
     return result;
 }
-std::string processstringuntilclose(const std::vector<std::string>& vec, int startIndex, std::string ) {
 
+std::string processstringuntilclose(const std::vector<std::string>& code, int startIndex, std::string close_char = "}") {
+    std::string temp;
+    std::string open_char;
+    bool confirmation;
+    int num = startIndex;
+    int error = 0;
+    if (close_char == "}") {
+        open_char = "{";
+    }
+    else if (close_char == ")") {
+        open_char = "(";
+    }
+    else if (close_char == "]") {
+        open_char = "[";
+    }
+
+    while (confirmation = 0) {
+        if ((code[num] == close_char) && (error = 0)) {
+            confirmation = 1;
+            return "FINISHED";
+        }
+        else if ((code[num] == close_char) && (error != 0)) {
+            error -= 1;
+        }
+        else if (code[num] == open_char) {
+            error += 1;
+        }
+        else {
+            num += 1;
+        }
+    }
 }
 
 
