@@ -345,6 +345,10 @@ int main(int argc, char* argv[]) {
         std::cerr << "Error reading file.\n";
         return 1;
     }
+    
+    FileContent.replace("\n", " ");
+    FileContent.replace(", ", " , ");
+    FileContent.replace("...", " ... ")
 
     // Generate Folder Structure
     std::filesystem::path OriginalPath(FilePath);
