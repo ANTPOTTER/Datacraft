@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <algorithm>
 #include <vector>
+#include <abc.extension>
 
 std::string ReadFile(const std::string& FileName) {
     std::ifstream File(FileName);
