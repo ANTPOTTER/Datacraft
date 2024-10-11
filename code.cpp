@@ -112,38 +112,38 @@ std::string command_creation(int command_type, std::string content, int program_
     switch(command_type) {
         // Version
         case 0:
-            // 1: 1.6.1 – 1.8.9
-            // 2: 1.9 – 1.10.2
-            // 3: 1.11 – 1.12.2
-            // 4: 1.13 – 1.14.4
-            // 5: 1.15 – 1.16.1
-            // 6: 1.16.2 – 1.16.5
-            // 7: 1.17 – 1.17.1
-            // 8: 1.18 – 1.18.2
-            // 9: 1.19 – 1.19.2
-            // 11: 22w42a – 22w44a
-            // 12: 1.19.3
-            // 13: 1.19.4
-            // 14: 23w14a – 23w16a
-            // 15: 1.20 – 1.20.1
-            // 16: 23w31a
-            // 17: 23w32a – 1.20.2-pre1
-            // 18: 1.20.2
-            // 19: 23w42a
-            // 20: 23w43a - 23w44a
-            // 21: 23w45a - 23w46a
-            // 22: 1.20.3 - 1.20.4
-            // 24: 24w03a - 24w04a
-            // 25: 24w05a - 24w05b
-            // 26: 24w06a - 24w07
-            // 28: 24w09a - 24w10a
-            // 29: 24w11a
-            // 30: 24w12a
-            // 31: 24w13a - 1.20.5-pre3
-            // 32: 1.20.5-pre4 - 1.20.5
-            // 34: 1.21 - onwards
-            
-            // LINK: https://minecraft.fandom.com/wiki/Pack_format
+            /*
+            1: 1.6.1 – 1.8.9
+            2: 1.9 – 1.10.2
+            3: 1.11 – 1.12.2
+            4: 1.13 – 1.14.4
+            5: 1.15 – 1.16.1
+            6: 1.16.2 – 1.16.5
+            7: 1.17 – 1.17.1
+            8: 1.18 – 1.18.2
+            9: 1.19 – 1.19.2
+            11: 22w42a – 22w44a
+            12: 1.19.3
+            13: 1.19.4
+            14: 23w14a – 23w16a
+            15: 1.20 – 1.20.1
+            16: 23w31a
+            17: 23w32a – 1.20.2-pre1
+            18: 1.20.2
+            19: 23w42a
+            20: 23w43a - 23w44a
+            21: 23w45a - 23w46a
+            22: 1.20.3 - 1.20.4
+            24: 24w03a - 24w04a
+            25: 24w05a - 24w05b
+            26: 24w06a - 24w07
+            28: 24w09a - 24w10a
+            29: 24w11a
+            30: 24w12a
+            31: 24w13a - 1.20.5-pre3
+            32: 1.20.5-pre4 - 1.20.5
+            34: 1.21 - onwards
+            */
             break;
         
         // Anchor
@@ -215,7 +215,7 @@ std::string command_creation(int command_type, std::string content, int program_
 
         // Random
         case 7:
-        
+            
             break;
     }
     
@@ -304,7 +304,13 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
 
     // RANDOM
     if (program_vector[program_count] == "random") {
-
+        try {
+            int temp_int = std::stoi(program_vector[program_count + 2]);
+            int temp_int2 = std::stoi(program_vector[program_count + 4]);
+            command_creation(7, contents, program_count)
+        } catch(...) {
+            std::cout << "fuck!" << std::endl;
+        }
     }
 
     // @
