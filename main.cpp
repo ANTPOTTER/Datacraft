@@ -7,50 +7,6 @@
 #include <vector>
 #include "functions.h"
 
-std::string ReadFile(const std::string& FileName) {
-    std::ifstream File(FileName);
-    if (!File) {
-        std::cerr << "Could not open file: " << FileName << std::endl;
-        return "";
-    }
-    std::string content((std::istreambuf_iterator<char>(File)),
-                        std::istreambuf_iterator<char>());
-    return content;
-}
-
-void WriteToFile(const std::string& FileName, const std::string& Content) {
-    std::ofstream OutputFile(FileName);
-    if (!OutputFile) {
-        std::cerr << "Could not create file: " << FileName << std::endl;
-        return;
-    }
-    OutputFile << Content;
-}
-
-std::string replace(std::string str, const std::string& oldSubstr, const std::string& newSubstr) {
-    size_t pos = 0;
-    while ((pos = str.find(oldSubstr, pos)) != std::string::npos) {
-        str.replace(pos, oldSubstr.length(), newSubstr);
-        pos += newSubstr.length();
-    }
-
-    return str;
-}
-
-
-
-std::string processVectorUntilChar(const std::vector<std::string>& vec, size_t startIndex, std::string targetChar) {
-    std::string result;
-    for (size_t i = startIndex; i < vec.size(); ++i) {
-        if ((vec[i] == targetChar) && (vec[i-1] != "\\")) {
-            break;
-        }
-        result += vec[i];
-    }
-
-    return result;
-}
-
 std::vector<std::string> ProcessStringUntilClose(const std::vector<std::string>& code, int startIndex, std::string close_char = "}") {
     std::vector<std::string> brace_content;
     std::string temp;
@@ -89,12 +45,6 @@ std::vector<std::string> ProcessStringUntilClose(const std::vector<std::string>&
         }
         num += 1;
     }
-}
-
-
-int command_count() {
-    static int counter = 0;
-    return counter++;
 }
 
 std::string command_creation(int command_type, std::string content, int program_counter) {
@@ -227,6 +177,7 @@ std::string command_creation(int command_type, std::string content, int program_
 int if_statement_toggle = 0;
 std::vector<std::string> end_commands;
 
+
 std::vector<std::string> code_words(std::vector<std::string> program_vector, int program_count, std::vector<std::string> commands_vector, int commands_count, std::vector<std::string> commandType) {
     std::string if_statement_toggle_string;
     std::vector<std::string> last_operation;
@@ -258,8 +209,8 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
                 }
                 if_statement_toggle = 1;
                 std::vector<std::string> temp_result = code_words(ifstatementvector, 0, commands_vector, commands_count, commandType);
-                last_operation.push_back("IF ");
-                last_operation.push_back(if_statement_toggle_string + " ");
+                last_operation.push_back("IF");
+                last_operation.push_back(if_statement_toggle_string);
             }
         }
     }
@@ -273,7 +224,7 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
                 std::vector<std::string> elsestatementvector;
                 elsestatementvector = ProcessStringUntilClose(program_vector, program_count + 1, ")");
                 std::vector<std::string> temp_result = code_words(elsestatementvector, 0, commands_vector, commands_count, commandType);
-                last_operation.push_back("ELSE ");
+                last_operation.push_back("ELSE");
             }
         }
     }
@@ -284,8 +235,8 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
             if (program_vector[program_count + 2] == "str") {
                 if (program_vector[program_count + 3] == "(") {
                     std::vector<std::string> temp_vector;
-                    temp_vector.erase(temp_vector.begin(), temp_vector.begin() + program_count+3);
-                      std::string say_content = processVectorUntilChar(temp_vector, program_count+3, ")");
+                    temp_vector.erase(temp_vector.begin(), temp_vector.begin() + program_count + 3);
+                    std::string say_content = processVectorUntilChar(temp_vector, program_count + 3, ")");
                     end_commands.push_back(command_creation(5, say_content, program_count));
                     last_operation.push_back("PRINT");  
                 }
@@ -346,14 +297,8 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     
-    for (char& c : FileContent) {
-        if (c == ',') {
-            c = ', ';
-        }
-        if ((c == '.') && (c+1 == '.') && (c+2 == '.')) {
-            c = '...';
-        }
-    }
+    FileContent = replace(FileContent, '\n', ' ');
+    FileContent = replace(FileContent, ',', ' ,');
 
     // Generate Folder Structure
     std::filesystem::path OriginalPath(FilePath);
@@ -378,7 +323,6 @@ int main(int argc, char* argv[]) {
         
         program_count += 1;
     }
-
 
 
 
