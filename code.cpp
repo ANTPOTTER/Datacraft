@@ -5,7 +5,7 @@
 #include <filesystem>
 #include <algorithm>
 #include <vector>
-#include <abc.extension>
+#include "functions.h"
 
 std::string ReadFile(const std::string& FileName) {
     std::ifstream File(FileName);
@@ -286,7 +286,7 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
                     std::vector<std::string> temp_vector;
                     temp_vector.erase(temp_vector.begin(), temp_vector.begin() + program_count+3);
                       std::string say_content = processVectorUntilChar(temp_vector, program_count+3, ")");
-                    end_commands = command_creation(5, say_content, program_count);
+                    end_commands.push_back(command_creation(5, say_content, program_count));
                     last_operation.push_back("PRINT");  
                 }
             }
@@ -308,7 +308,8 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
         try {
             int temp_int = std::stoi(program_vector[program_count + 2]);
             int temp_int2 = std::stoi(program_vector[program_count + 4]);
-            command_creation(7, contents, program_count)
+                std::string contents = program_vector[program_count + 2];
+            command_creation(7, contents, program_count);
         } catch(...) {
             std::cout << "fuck!" << std::endl;
         }
@@ -323,8 +324,6 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
     if (program_vector[program_count] == "range") {
 
     }
-
-    commands;
 }
     // Var, Version, Anchor, Spawn, @(Const, droppless), Range(Coordinates)
 
@@ -347,9 +346,14 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     
-    FileContent.replace("\n", " ");
-    FileContent.replace(", ", " , ");
-    FileContent.replace("...", " ... ")
+    for (char& c : FileContent) {
+        if (c == ',') {
+            c = ', ';
+        }
+        if ((c == '.') && (c+1 == '.') && (c+2 == '.')) {
+            c = '...';
+        }
+    }
 
     // Generate Folder Structure
     std::filesystem::path OriginalPath(FilePath);
