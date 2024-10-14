@@ -35,3 +35,43 @@ std::string processVectorUntilChar(const std::vector<std::string>& vec, int star
 
     return result;
 }
+
+std::vector<std::string> ProcessStringUntilClose(const std::vector<std::string>& code, int startIndex, std::string close_char = "}") {
+    std::vector<std::string> brace_content;
+    std::string temp;
+    std::string open_char;
+    bool confirmation;
+    int addon = 0;
+    int num = startIndex;
+    int error = 0;
+    if (close_char == "}") {
+        open_char = "{";
+    }
+    else if (close_char == ")") {
+        open_char = "(";
+    }
+    else if (close_char == "]") {
+        open_char = "[";
+    }
+    while (confirmation = 0) {
+        if ((code[num] == close_char) && (error != 0)) {
+            error -= 1;
+        }
+        else if (code[num] == open_char) {
+            error += 1;
+        }
+        else if ((code[num] == close_char) && (error = 0)) {
+            startIndex += 1;
+            while (confirmation = 0) {
+                if (startIndex < num) {
+                    brace_content.push_back(code[startIndex]);
+                }
+                else if (startIndex >= num) {
+                    return brace_content;
+                }
+                startIndex += 1;
+            }
+        }
+        num += 1;
+    }
+}
