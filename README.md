@@ -2,7 +2,6 @@
 A small barely functional programming language for minecraft datapacks.
 
 # Syntax
-## Required Code
 ### Version
 you must somewhere in your code define the version, it should be written in the following style:
 `version = 1.20.4;` 
