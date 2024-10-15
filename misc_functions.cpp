@@ -84,3 +84,14 @@ bool containsAnyCharacter(const std::string& str, const char arr[], size_t arrSi
     }
     return false;
 }
+
+bool vectorcontainsword(std::string str, std::vector<std::string> vector, int skip_count = 1) {
+    int total;
+    while (total <= vector.size()) {
+        if (str.find(vector[total]) != std::string::npos) {
+            return true;
+        }
+        total += skip_count;
+    }
+    return false;
+}
