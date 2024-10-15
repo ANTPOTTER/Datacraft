@@ -24,5 +24,6 @@ int command_count();
 std::string processVectorUntilChar(std::vector<std::string> vec, int startIndex, std::string targetChar);
 std::vector<std::string> ProcessStringUntilClose(const std::vector<std::string>& code, int startIndex, std::string close_char = "}");
 bool containsAnyCharacter(const std::string& str, const char arr[], size_t arrSize);
+bool vectorcontainsword(std::string str, std::vector<std::string> vector, int skip_count = 1);
 
 #endif
