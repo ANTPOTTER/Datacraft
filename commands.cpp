@@ -7,107 +7,116 @@
 #include <vector>
 #include "functions.h"
 
+std::vector<std::string> variables;
 
 std::vector<std::string> code_words(std::vector<std::string> program_vector, int program_count, std::vector<std::string> commands_vector, int commands_count, std::vector<std::string> commandType) {
     static bool if_statement_toggle;
     static std::vector<std::string> end_commands;
     std::string if_statement_toggle_string;
     std::vector<std::string> last_operation;
-    char valid_nums[11] = {'~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    char valid_nums[12] = {'~', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
     program_vector[program_count];
     int next_func_num;
-    std::string next_func = "function functions:";
+    std::string next_func;
 
     std::string switch_var = program_vector[program_count];
 
-    if (if_statement_toggle = 1) {
-        
+    if (if_statement_toggle = 0) {
+        next_func = "function functions:";
     }
     else if (if_statement_toggle = 1) {
-        
+        next_func = "function functions:if";
     }
-    
-    // IF
-    if (program_vector[program_count] == "if") {
-        if (program_vector[program_count + 2].find(valid_nums) != std::string::npos) {
-            if (program_vector[program_count + 1] == "(") {
-                std::vector<std::string> ifstatementvector;
-                ifstatementvector = ProcessStringUntilClose(program_vector, program_count + 5, "}");
-                if (if_statement_toggle = 0) {
-                    if_statement_toggle_string = "OUTER";
+    while (program_count <= program_vector.size()) {
+        // VARIABLES
+        if (program_vector[program_count] == "var" || vectorcontainsword(program_vector[program_count], variables, 2)) {
+            
+        }
+
+        // IF
+        if (program_vector[program_count] == "if") {
+            if (program_vector[program_count + 2].find(valid_nums) != std::string::npos) {
+                if (program_vector[program_count + 1] == "(") {
+                    if (containsAnyCharacter(program_vector[program_count + 2], valid_nums, 12)) {
+                        std::vector<std::string> ifstatementvector;
+                        ifstatementvector = ProcessStringUntilClose(program_vector, program_count + 8, "}");
+                        if (if_statement_toggle = 0) {
+                            if_statement_toggle_string = "OUTER";
+                        }
+                        if (if_statement_toggle = 1) {
+                            if_statement_toggle_string = "NESTED";
+                        }
+                        if_statement_toggle = 1;
+                        std::vector<std::string> temp_result = code_words(ifstatementvector, 0, commands_vector, commands_count, commandType);
+                        last_operation.push_back("IF");
+                        last_operation.push_back(if_statement_toggle_string);
+                    }
                 }
+            }
+        }
+        // ELSE
+        if (program_vector[program_count] == "else") {
+            if (last_operation[program_count - 1] == "IF OUTER") {
                 if (if_statement_toggle = 1) {
-                    if_statement_toggle_string = "NESTED";
+                    std::cerr << "INCORRECT STRUCTURE" << std::endl;
                 }
-                if_statement_toggle = 1;
-                std::vector<std::string> temp_result = code_words(ifstatementvector, 0, commands_vector, commands_count, commandType);
-                last_operation.push_back("IF");
-                last_operation.push_back(if_statement_toggle_string);
-            }
-        }
-    }
-    // ELSE
-    if (program_vector[program_count] == "else") {
-        if (last_operation[program_count - 1] == "IF OUTER") {
-            if (if_statement_toggle = 1) {
-                std::cerr << "INCORRECT STRUCTURE" << std::endl;
-            }
-            else if (if_statement_toggle = 0) {
-                std::vector<std::string> elsestatementvector;
-                elsestatementvector = ProcessStringUntilClose(program_vector, program_count + 1, ")");
-                std::vector<std::string> temp_result = code_words(elsestatementvector, 0, commands_vector, commands_count, commandType);
-                last_operation.push_back("ELSE");
-            }
-        }
-    }
-
-    // PRINT
-    if (program_vector[program_count] == "print") {
-        if (program_vector[program_count + 1] == "(") {
-            if (program_vector[program_count + 2] == "str") {
-                if (program_vector[program_count + 3] == "(") {
-                    std::vector<std::string> temp_vector;
-                    temp_vector.erase(temp_vector.begin(), temp_vector.begin() + program_count + 3);
-                    std::string say_content = processVectorUntilChar(temp_vector, program_count + 3, ")");
-                    end_commands.push_back(command_creation(5, say_content, program_count));
-                    last_operation.push_back("PRINT");  
+                else if (if_statement_toggle = 0) {
+                    std::vector<std::string> elsestatementvector;
+                    elsestatementvector = ProcessStringUntilClose(program_vector, program_count + 1, ")");
+                    std::vector<std::string> temp_result = code_words(elsestatementvector, 0, commands_vector, commands_count, commandType);
+                    last_operation.push_back("ELSE");
                 }
             }
         }
-    }
 
-    // SLEEP
-    if (program_vector[program_count] == "sleep") {
-        if (program_vector[program_count + 1] == "(") {
-            if (program_vector[program_count + 3] == ")") {
-                std::string contents = program_vector[program_count + 2];
-                command_creation(6, contents, program_count);
+        // PRINT
+        if (program_vector[program_count] == "print") {
+            if (program_vector[program_count + 1] == "(") {
+                if (program_vector[program_count + 2] == "str") {
+                    if (program_vector[program_count + 3] == "(") {
+                        std::vector<std::string> temp_vector;
+                        temp_vector.erase(temp_vector.begin(), temp_vector.begin() + program_count + 3);
+                        std::string say_content = processVectorUntilChar(temp_vector, program_count + 3, ")");
+                        end_commands.push_back(command_creation(5, say_content, program_count));
+                        last_operation.push_back("PRINT");  
+                    }
+                }
             }
         }
-    }
 
-    // RANDOM
-    if (program_vector[program_count] == "random") {
-        try {
-            int temp_int = std::stoi(program_vector[program_count + 2]);
-            int temp_int2 = std::stoi(program_vector[program_count + 4]);
-                std::string contents = program_vector[program_count + 2];
-            command_creation(7, contents, program_count);
-        } catch(...) {
-            std::cout << "fuck!" << std::endl;
+        // SLEEP
+        if (program_vector[program_count] == "sleep") {
+            if (program_vector[program_count + 1] == "(") {
+                if (program_vector[program_count + 3] == ")") {
+                    std::string contents = program_vector[program_count + 2];
+                    command_creation(6, contents, program_count);
+                }
+            }
         }
+
+        // RANDOM
+        if (program_vector[program_count] == "random") {
+            try {
+                int temp_int = std::stoi(program_vector[program_count + 2]);
+                int temp_int2 = std::stoi(program_vector[program_count + 4]);
+                    std::string contents = program_vector[program_count + 2];
+                command_creation(7, contents, program_count);
+            } catch(...) {
+                std::cout << "fuck!" << std::endl;
+            }
+        }
+
+        // @
+        if (program_vector[program_count] == "@") {
+
+        }
+
+        // RANGE
+        if (program_vector[program_count] == "range") {
+
+        }
+        // Var, Version, Anchor, Spawn, @(Const, droppless), Range(Coordinates)
     }
-
-    // @
-    if (program_vector[program_count] == "@") {
-
-    }
-
-    // RANGE
-    if (program_vector[program_count] == "range") {
-
-    }
-    // Var, Version, Anchor, Spawn, @(Const, droppless), Range(Coordinates)
 }
 
 /*
