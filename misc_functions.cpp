@@ -75,3 +75,12 @@ std::vector<std::string> ProcessStringUntilClose(const std::vector<std::string>&
         num += 1;
     }
 }
+
+bool containsAnyCharacter(const std::string& str, const char arr[], size_t arrSize) {
+    for (size_t i = 0; i < arrSize; ++i) { 
+        if (str.find(arr[i]) != std::string::npos) {
+            return true; 
+        }
+    }
+    return false;
+}
