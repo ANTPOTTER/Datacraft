@@ -16,6 +16,9 @@ int main(int argc, char* argv[]) {
     std::string FilePath = argv[1];
     std::cout << "Opening file: " << FilePath << std::endl;
 
+    std::filesystem::path path_obj(FilePath);
+    std::string file_name = path_obj.filename().string();
+
     std::string FileContent = ReadFile(FilePath);
     
     if (FileContent.empty()) {
