@@ -95,3 +95,23 @@ bool vectorcontainsword(std::string str, std::vector<std::string> vector, int sk
     }
     return false;
 }
+
+std::string concatenateVector(const std::vector<std::string>& vec) {
+    std::ostringstream oss;
+    
+    for (const auto& str : vec) {
+        oss << str << " ";
+    }
+
+    return oss.str();
+}
+
+std::vector<std::string> splitString(const std::string& str, char splitter) {
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream tokenStream(str);
+    while (std::getline(tokenStream, token, splitter)) {
+        tokens.push_back(token);
+    }
+    return tokens;
+}
