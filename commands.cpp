@@ -30,7 +30,21 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
     while (program_count <= program_vector.size()) {
         // VARIABLES
         if (program_vector[program_count] == "var" || vectorcontainsword(program_vector[program_count], variables, 2)) {
-            
+            if (program_vector[program_count] == "var") {
+                variables.push_back(program_vector[program_count + 1]);
+                std::vector<std::string> temp3;
+                temp3 = (ProcessStringUntilClose(program_vector, program_count + 4, ")"));
+                variables.push_back(concatenateVector(temp3));
+            }
+            else if (vectorcontainsword(program_vector[program_count], variables, 2)) {
+                    int total;
+                    while (total <= variables.size()) {
+                        if (program_vector[program_count].find(variables[total]) != std::string::npos) {
+                            splitString(variables[total + 1], ' ');
+                        }
+                        total += 2;
+                    }
+            }
         }
 
         // IF
