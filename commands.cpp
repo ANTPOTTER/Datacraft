@@ -64,8 +64,18 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
                             if_statement_toggle_string = "NESTED";
                         }
                         if_statement_toggle = 1;
-                        std::vector<std::string> temp_result = code_words(ifstatementvector, 0, commands_vector, commands_count, commandType);
+                        std::vector<std::string> if_requirement_vector;
+                        if_requirement_vector.push_back("COORD 1");
+                        if_requirement_vector.push_back(program_vector[program_count + 2]);
+                        if_requirement_vector.push_back("COORD 2");
+                        if_requirement_vector.push_back(program_vector[program_count + 3]);
+                        if_requirement_vector.push_back("COORD 3");
+                        if_requirement_vector.push_back(program_vector[program_count + 4]);
+                        std::vector<std::string> if_code_word_pass;
+                        if_code_word_pass.insert(if_requirement_vector.end(), ifstatementvector.begin(), ifstatementvector.end());
+                        std::vector<std::string> temp_result =  code_words(if_code_word_pass, 0, commands_vector, commands_count, commandType);
                         last_operation.push_back("IF");
+                        last_operation.push_back(concatenateVector(if_requirement_vector));
                         last_operation.push_back(if_statement_toggle_string);
                     }
                 }
@@ -74,15 +84,11 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
         // ELSE
         if (program_vector[program_count] == "else") {
             if (last_operation[program_count - 1] == "IF OUTER") {
-                if (if_statement_toggle = 1) {
-                    std::cerr << "INCORRECT STRUCTURE" << std::endl;
-                }
-                else if (if_statement_toggle = 0) {
+
                     std::vector<std::string> elsestatementvector;
                     elsestatementvector = ProcessStringUntilClose(program_vector, program_count + 1, ")");
                     std::vector<std::string> temp_result = code_words(elsestatementvector, 0, commands_vector, commands_count, commandType);
                     last_operation.push_back("ELSE");
-                }
             }
         }
 
@@ -137,12 +143,12 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
 }
 
 /*
- ____  _____ ____  _____ ____  ____  _____  _____
+____  _____ ____  _____ ____  ____  _____  _____
 / ___\/  __//  __\/  __//  __\/  _ \/__ __\/  __/
 |    \|  \  |  \/||  \  |  \/|| / \|  / \  |  \  
 \___ ||  /_ |  __/|  /_ |    /| |-||  | |  |  /_ 
 \____/\____\\_/   \____\\_/\_\\_/ \|  \_/  \____\
-                                                 
+                                                
 */                                                 
 
 std::string command_creation(int command_type, std::string content, int program_counter) {
