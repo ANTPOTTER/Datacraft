@@ -34,13 +34,16 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
                 variables.push_back(program_vector[program_count + 1]);
                 std::vector<std::string> temp3;
                 temp3 = (ProcessStringUntilClose(program_vector, program_count + 4, ")"));
-                variables.push_back(concatenateVector(temp3));
+                std::string variable_formatting = program_vector[program_count + 3] + " ( " + concatenateVector(temp3);
+                variables.push_back(variable_formatting);
             }
             else if (vectorcontainsword(program_vector[program_count], variables, 2)) {
                     int total;
                     while (total <= variables.size()) {
                         if (program_vector[program_count].find(variables[total]) != std::string::npos) {
-                            splitString(variables[total + 1], ' ');
+                            std::vector<std::string> temp_vector = splitString(variables[total + 1], ' ');
+                            program_vector.erase(program_vector.begin() + total);
+                            program_vector.insert(program_vector.begin() + total, temp_vector.begin(), temp_vector.end());
                         }
                         total += 2;
                     }
