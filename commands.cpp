@@ -13,9 +13,8 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
     static bool if_statement_toggle;
     static std::vector<std::string> end_commands;
     std::string if_statement_toggle_string;
-    std::vector<std::string> last_operation;
+    static std::vector<std::string> last_operation;
     char valid_nums[12] = {'~', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    program_vector[program_count];
     int next_func_num;
     int counter;
     std::string next_func;
@@ -29,8 +28,6 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
         next_func = "function functions:if";
     }
     while (program_count <= program_vector.size()) {
-        
-        
         // VARIABLES
         if (program_vector[program_count] == "var" || vectorcontainsword(program_vector[program_count], variables, 2)) {
             if (program_vector[program_count] == "var") {
@@ -52,6 +49,7 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
                     }
             }
         }
+        
         // IF
         if (program_vector[program_count] == "if") {
             if (program_vector[program_count + 2].find(valid_nums) != std::string::npos) {
@@ -72,7 +70,10 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
                         if_requirement_vector.push_back(program_vector[program_count + 4]);
                         std::vector<std::string> if_code_word_pass;
                         if_code_word_pass.insert(if_requirement_vector.end(), ifstatementvector.begin(), ifstatementvector.end());
-                        std::vector<std::string> temp_result =  code_words(if_code_word_pass, 0, commands_vector, commands_count, commandType);
+                        
+                        command_creation(5, if_requirement_vector, program_counter, last_operation);
+                        
+                        std::vector<std::string> temp_result = code_words(if_code_word_pass, 0, commands_vector, commands_count, commandType);
                         last_operation.push_back("IF");
                         last_operation.push_back(concatenateVector(if_requirement_vector));
                         last_operation.push_back(if_statement_toggle_string);
@@ -81,7 +82,7 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
             }
         }
         // ELSE
-        if (program_vector[program_count] == "else") {
+        else if (program_vector[program_count] == "else") {
             if (last_operation[program_count - 1] == "OUTER") {
                 if (counter != 0) {
                     std::vector<std::string> elsestatementvector;
@@ -93,14 +94,14 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
         }
 
         // PRINT
-        if (program_vector[program_count] == "print") {
+        else if (program_vector[program_count] == "print") {
             if (program_vector[program_count + 1] == "(") {
                 if (program_vector[program_count + 2] == "str") {
                     if (program_vector[program_count + 3] == "(") {
                         std::vector<std::string> temp_vector;
                         temp_vector.erase(temp_vector.begin(), temp_vector.begin() + program_count + 3);
                         std::string say_content = processVectorUntilChar(temp_vector, program_count + 3, ")");
-                        end_commands.push_back(command_creation(5, say_content, program_count));
+                        end_commands.push_back(command_creation(5, say_content, program_count, last_operation));
                         last_operation.push_back("PRINT");  
                     }
                 }
@@ -108,34 +109,34 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
         }
 
         // SLEEP
-        if (program_vector[program_count] == "sleep") {
+        else if (program_vector[program_count] == "sleep") {
             if (program_vector[program_count + 1] == "(") {
                 if (program_vector[program_count + 3] == ")") {
                     std::string contents = program_vector[program_count + 2];
-                    command_creation(6, contents, program_count);
+                    command_creation(6, contents, program_count, last_operation);
                 }
             }
         }
 
         // RANDOM
-        if (program_vector[program_count] == "random") {
+        else if (program_vector[program_count] == "random") {
             try {
                 int temp_int = std::stoi(program_vector[program_count + 2]);
                 int temp_int2 = std::stoi(program_vector[program_count + 4]);
                     std::string contents = program_vector[program_count + 2];
-                command_creation(7, contents, program_count);
+                command_creation(7, contents, program_count, last_operation);
             } catch(...) {
                 std::cout << "fuck!" << std::endl;
             }
         }
 
         // @
-        if (program_vector[program_count] == "@") {
+        else if (program_vector[program_count] == "@") {
 
         }
 
         // RANGE
-        if (program_vector[program_count] == "range") {
+        else if (program_vector[program_count] == "range") {
 
         }
         // Var, Version, Anchor, Spawn, @(Const, droppless), Range(Coordinates)
@@ -156,7 +157,7 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
 
 
 
-std::string command_creation(int command_type, std::string content, int program_counter) {
+std::string command_creation(int command_type, std::string content, int program_counter, std::vector<std::string> last_operation) {
     int temp;
     int command_formatting;
     command_formatting << command_count();
