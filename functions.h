@@ -12,7 +12,7 @@
 
 // Commands
 std::vector<std::string> code_words(std::vector<std::string> program_vector, int program_count, std::vector<std::string> commands_vector, int commands_count, std::vector<std::string> commandType);
-std::string command_creation(int command_type, std::string content, int program_counter);
+std::string command_creation(int command_type, std::string content, int program_counter, std::vector<std::string> last_operation);
 
 // File Reading
 std::string ReadFile(const std::string& FileName);
