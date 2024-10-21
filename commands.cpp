@@ -163,19 +163,17 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
 
 
 std::string command_creation(int command_type, std::string content, int program_counter, std::vector<std::string> last_operation) {
+    static bool if_toggle;
+    static int if_counter = 0;
+    static std::string commands;
     int temp;
     int command_formatting;
-    command_formatting << command_count();
     std::string command_formatted = std::to_string(command_formatting);
     std::string command_temp;
     std::string command_temp1;
-
-    std::vector<std::string> requirements;
-
+    std::string command_template;
     std::string temp1;
-
-    static std::string commands;
-
+    std::vector<std::string> requirements;
 
     switch(command_type) {
         // Version
@@ -226,7 +224,9 @@ std::string command_creation(int command_type, std::string content, int program_
 
         // If
         case 3:
+            if_counter += 1;
             requirements = splitString(content, ' ');
+            return command_template = "execute as @s at @s if block " + requirements[0] + requirements[1] + requirements[2] + requirements[3] + "\n";
             break;
 
         // Else
@@ -237,17 +237,29 @@ std::string command_creation(int command_type, std::string content, int program_
         // Print
         case 5:
             command_temp = "say " + content;
+
+            if (if_toggle = true) {
+                command_temp1 = "function funcs:if_" + if_counter + '_' + command_count();
+            }
+            else if (if_toggle = false) {
+
+            }
+            else {
+                std::cerr << "genuinely, what the actual fuck have you done bro??" << std::endl;
+            }
+
             command_temp1 = "\\nfunction funcs:" + temp;
             if (program_counter < 1) {
                 commands += command_temp + "//nfunction funcs:1";
             }
             else {
-                commands += "\\n" + command_temp + command_temp1;
+                commands = command_temp + command_temp1 + "\n";
             }
             temp = 0;
             temp1 = "";
             command_temp = "";
             command_temp1 = "";
+            return commands;
             break;
 
         // Sleep
@@ -273,12 +285,10 @@ std::string command_creation(int command_type, std::string content, int program_
                     command_temp = "schedule function func:" + command_formatted + content + temp1 + "append";
                 }
             }
-        commands += "//n" + command_temp;
-        
-        command_temp = "";
         command_temp1 =  "";
         temp = 0;
         temp1 = "";
+        return command_temp + "\n";
             break;
 
         // Random
