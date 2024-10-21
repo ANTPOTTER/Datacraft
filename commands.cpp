@@ -236,25 +236,18 @@ std::string command_creation(int command_type, std::string content, int program_
 
         // Print
         case 5:
-            command_temp = "say " + content;
+            command_temp = "execute as @s at @s run say " + content;
 
             if (if_toggle = true) {
                 command_temp1 = "function funcs:if_" + if_counter + '_' + command_count();
             }
             else if (if_toggle = false) {
-
+                command_temp1 = "function funcs:" + command_count();
             }
             else {
                 std::cerr << "genuinely, what the actual fuck have you done bro??" << std::endl;
             }
-
-            command_temp1 = "\\nfunction funcs:" + temp;
-            if (program_counter < 1) {
-                commands += command_temp + "//nfunction funcs:1";
-            }
-            else {
-                commands = command_temp + command_temp1 + "\n";
-            }
+            commands = command_temp + command_temp1;
             temp = 0;
             temp1 = "";
             command_temp = "";
