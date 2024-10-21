@@ -66,12 +66,17 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
                         if_statement_toggle = 1;
                         std::vector<std::string> if_requirement_vector;
                         if_requirement_vector.push_back(program_vector[program_count + 2]);
+                        if_requirement_vector.push_back(" ");
                         if_requirement_vector.push_back(program_vector[program_count + 3]);
+                        if_requirement_vector.push_back(" ");
                         if_requirement_vector.push_back(program_vector[program_count + 4]);
+                        if_requirement_vector.push_back(" ");
+                        std::vector<std::string> if_command_creation = if_requirement_vector;
+                        if_command_creation.push_back(program_vector[program_count + 6]);
                         std::vector<std::string> if_code_word_pass;
                         if_code_word_pass.insert(if_requirement_vector.end(), ifstatementvector.begin(), ifstatementvector.end());
-                        
-                        command_creation(5, if_requirement_vector, program_counter, last_operation);
+
+                        command_creation(3, concatenateVector(if_command_creation), program_count, last_operation);
                         
                         std::vector<std::string> temp_result = code_words(if_code_word_pass, 0, commands_vector, commands_count, commandType);
                         last_operation.push_back("IF");
@@ -165,6 +170,8 @@ std::string command_creation(int command_type, std::string content, int program_
     std::string command_temp;
     std::string command_temp1;
 
+    std::vector<std::string> requirements;
+
     std::string temp1;
 
     static std::string commands;
@@ -219,7 +226,7 @@ std::string command_creation(int command_type, std::string content, int program_
 
         // If
         case 3:
-            
+            requirements = splitString(content, ' ');
             break;
 
         // Else
