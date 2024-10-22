@@ -27,5 +27,7 @@ bool containsAnyCharacter(const std::string& str, const char arr[], size_t arrSi
 bool vectorcontainsword(std::string str, std::vector<std::string> vector, int skip_count = 1);
 std::string concatenateVector(const std::vector<std::string>& vec);
 std::vector<std::string> splitString(const std::string& str, char splitter);
+std::vector<std::string> splitByNthOccurrence(const std::string& str, char delimiter, int n)
 
 #endif
+
