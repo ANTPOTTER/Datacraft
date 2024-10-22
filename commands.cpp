@@ -18,6 +18,7 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
     int next_func_num;
     int counter;
     std::string next_func;
+    std::string if_chunk;
 
     std::string switch_var = program_vector[program_count];
 
@@ -48,6 +49,7 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
                         total += 2;
                     }
             }
+            counter += 1;
         }
         
         // IF
@@ -76,7 +78,7 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
                         std::vector<std::string> if_code_word_pass;
                         if_code_word_pass.insert(if_requirement_vector.end(), ifstatementvector.begin(), ifstatementvector.end());
 
-                        command_creation(3, concatenateVector(if_command_creation), program_count, last_operation);
+                        if_chunk = command_creation(3, concatenateVector(if_command_creation), program_count, last_operation) + "";
                         
                         std::vector<std::string> temp_result = code_words(if_code_word_pass, 0, commands_vector, commands_count, commandType);
                         last_operation.push_back("IF");
@@ -226,7 +228,8 @@ std::string command_creation(int command_type, std::string content, int program_
         case 3:
             if_counter += 1;
             requirements = splitString(content, ' ');
-            return command_template = "execute as @s at @s if block " + requirements[0] + requirements[1] + requirements[2] + requirements[3] + "\n";
+            command_template = "execute as @s at @s if block " + requirements[0] + " " + requirements[1] + " " +requirements[2] + " " + requirements[3] + "\n";
+            return command_template = command_template + "function funcs:if_" + std::to_string(if_counter) + "_" + std::to_string(command_count());
             break;
 
         // Else
@@ -236,13 +239,13 @@ std::string command_creation(int command_type, std::string content, int program_
 
         // Print
         case 5:
-            command_temp = "execute as @s at @s run say " + content;
+            command_temp = "execute as @s at @s run say " + content + "\n";
 
             if (if_toggle = true) {
-                command_temp1 = "function funcs:if_" + if_counter + '_' + command_count();
+                command_temp1 = "function funcs:if_" + if_counter + '_' + std::to_string(command_count()) + "\n";
             }
             else if (if_toggle = false) {
-                command_temp1 = "function funcs:" + command_count();
+                command_temp1 = "function funcs:" + std::to_string(command_count()) + "\n";
             }
             else {
                 std::cerr << "genuinely, what the actual fuck have you done bro??" << std::endl;
