@@ -115,3 +115,27 @@ std::vector<std::string> splitString(const std::string& str, char splitter) {
     }
     return tokens;
 }
+
+std::vector<std::string> splitByNthOccurrence(const std::string& str, char delimiter, int n) {
+    std::vector<std::string> result;
+    std::string current;
+    int occurrence = 0;
+    for (size_t i = 0; i < str.size(); ++i) {
+        if (str[i] == delimiter) {
+            occurrence++;
+            if (occurrence == n) {
+                result.push_back(current);
+                current.clear();
+                occurrence = 0;
+            } else {
+                current += str[i];
+            }
+        } else {
+            current += str[i];
+        }
+    }
+    if (!current.empty()) {
+        result.push_back(current);
+    }
+    return result;
+}
