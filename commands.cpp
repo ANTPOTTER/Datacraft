@@ -11,6 +11,7 @@ std::vector<std::string> variables;
 
 std::vector<std::string> code_words(std::vector<std::string> program_vector, int program_count, std::vector<std::string> commands_vector, int commands_count, std::vector<std::string> commandType) {
     static bool if_statement_toggle;
+    static bool Contains_GUI;
     static std::vector<std::string> end_commands;
     std::string if_statement_toggle_string;
     static std::vector<std::string> last_operation;
@@ -21,7 +22,6 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
     std::string if_chunk;
 
     std::string switch_var = program_vector[program_count];
-
     if (if_statement_toggle = 0) {
         next_func = "function functions:";
     }
@@ -90,13 +90,11 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
         }
         // ELSE
         else if (program_vector[program_count] == "else") {
-            if (last_operation[program_count - 1] == "OUTER") {
-                if (counter != 0) {
-                    std::vector<std::string> elsestatementvector;
-                    elsestatementvector = ProcessStringUntilClose(program_vector, program_count + 1, ")");
-                    std::vector<std::string> temp_result = code_words(elsestatementvector, 0, commands_vector, commands_count, commandType);
-                    last_operation.push_back("ELSE");
-                }
+            if (counter != 0) {
+                std::vector<std::string> elsestatementvector;
+                elsestatementvector = ProcessStringUntilClose(program_vector, program_count + 1, ")");
+                std::vector<std::string> temp_result = code_words(elsestatementvector, 0, commands_vector, commands_count, commandType);
+                last_operation.push_back("ELSE");
             }
         }
 
@@ -146,6 +144,12 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
         else if (program_vector[program_count] == "range") {
 
         }
+
+        // GUI
+        else if (program_vector[program_count] == "GUI") {
+            Contains_GUI = true;
+        }
+
         // Var, Version, Anchor, Spawn, @(Const, droppless), Range(Coordinates)
         counter += 1;
     }
@@ -291,8 +295,10 @@ std::string command_creation(int command_type, std::string content, int program_
         case 7:
             
             break;
+        
+        // GUI
+        case 8:
+
+            break;
     }
-    
-
-
 }
