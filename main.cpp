@@ -45,13 +45,12 @@ int main(int argc, char* argv[]) {
         code_vector.push_back(token);
     }
 
+    std::vector<std::string> commands_vector;
+    std::vector<std::string> command_type;
 
     // Comment
     int program_count = 0;
-    while (program_count < code_vector.size()) {
-        
-        program_count += 1;
-    }
+    code_words(code_vector, 0, commands_vector, 0, command_type);
 
 
 
