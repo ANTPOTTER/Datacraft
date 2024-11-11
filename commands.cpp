@@ -142,7 +142,7 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
 
         // RANGE
         else if (program_vector[program_count] == "range") {
-
+            randge_loop(program_vector, program_count);
         }
 
         // GUI
