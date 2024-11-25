@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
     std::vector<std::string> formal_code;
     std::stringstream ss(code);
     std::string token;
-    while (std::getline(ss, token, "[ END_FILE ]")) {
+    while (std::getline(ss, token, "[ NEW_COMMAND ]")) {
         formal_code.push_back(token);
     }
 
