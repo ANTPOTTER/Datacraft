@@ -10,7 +10,7 @@
 std::vector<std::string> variables;
 
 std::vector<std::string> code_words(std::vector<std::string> program_vector, int program_count, std::vector<std::string> commands_vector, int commands_count, std::vector<std::string> commandType) {
-    static bool if_statement_toggle;
+    static int if_statement_toggle;
     static bool Contains_GUI;
     static std::vector<std::string> end_commands;
     std::string if_statement_toggle_string;
@@ -25,7 +25,7 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
     if (if_statement_toggle = 0) {
         next_func = "function functions:";
     }
-    else if (if_statement_toggle = 1) {
+    else {
         next_func = "function functions:if";
     }
     while (program_count <= program_vector.size()) {
@@ -39,7 +39,7 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
                 variables.push_back(variable_formatting);
             }
             else if (vectorcontainsword(program_vector[program_count], variables, 2)) {
-                    int total;
+                    int total = 1;
                     while (total <= variables.size()) {
                         if (program_vector[program_count].find(variables[total]) != std::string::npos) {
                             std::vector<std::string> temp_vector = splitString(variables[total + 1], ' ');
@@ -65,7 +65,7 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
                         if (if_statement_toggle = 1) {
                             if_statement_toggle_string = "NESTED";
                         }
-                        if_statement_toggle = 1;
+                        if_statement_toggle++;
                         std::vector<std::string> if_requirement_vector;
                         if_requirement_vector.push_back(program_vector[program_count + 2]);
                         if_requirement_vector.push_back(" ");
@@ -81,9 +81,10 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
                         if_chunk = command_creation(3, concatenateVector(if_command_creation), program_count, last_operation) + "";
                         
                         std::vector<std::string> temp_result = code_words(if_code_word_pass, 0, commands_vector, commands_count, commandType);
-                        last_operation.push_back("IF");
                         last_operation.push_back(concatenateVector(if_requirement_vector));
                         last_operation.push_back(if_statement_toggle_string);
+                        last_operation.push_back("IF");
+                        if_statement_toggle--;
                     }
                 }
             }
@@ -91,10 +92,13 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
         // ELSE
         else if (program_vector[program_count] == "else") {
             if (counter != 0) {
+                if (last_operation.back() == "IF") {
                 std::vector<std::string> elsestatementvector;
                 elsestatementvector = ProcessStringUntilClose(program_vector, program_count + 1, ")");
                 std::vector<std::string> temp_result = code_words(elsestatementvector, 0, commands_vector, commands_count, commandType);
                 last_operation.push_back("ELSE");
+
+                }
             }
         }
 
@@ -107,7 +111,7 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
                         temp_vector.erase(temp_vector.begin(), temp_vector.begin() + program_count + 3);
                         std::string say_content = processVectorUntilChar(temp_vector, program_count + 3, ")");
                         end_commands.push_back(command_creation(5, say_content, program_count, last_operation));
-                        last_operation.push_back("PRINT");  
+                        last_operation.push_back("PRINT");
                     }
                 }
             }
@@ -125,14 +129,11 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
 
         // RANDOM
         else if (program_vector[program_count] == "random") {
-            try {
                 int temp_int = std::stoi(program_vector[program_count + 2]);
                 int temp_int2 = std::stoi(program_vector[program_count + 4]);
                     std::string contents = program_vector[program_count + 2];
                 command_creation(7, contents, program_count, last_operation);
-            } catch(...) {
-                std::cout << "fuck!" << std::endl;
-            }
+
         }
 
         // @
@@ -246,10 +247,10 @@ std::string command_creation(int command_type, std::string content, int program_
             command_temp = "execute as @s at @s run say " + content + "\n";
 
             if (if_toggle = true) {
-                command_temp1 = "function funcs:if_" + if_counter + '_' + std::to_string(command_count()) + "\n";
+                command_temp1 = "function funcs:if_" + if_counter + '_' + std::to_string(command_count()) + "[ NEW_COMMAND]";
             }
             else if (if_toggle = false) {
-                command_temp1 = "function funcs:" + std::to_string(command_count()) + "\n";
+                command_temp1 = "function funcs:" + std::to_string(command_count()) + "[ NEW_COMMAND ]";
             }
             else {
                 std::cerr << "genuinely, what the actual fuck have you done bro??" << std::endl;
@@ -270,7 +271,7 @@ std::string command_creation(int command_type, std::string content, int program_
     
             if (program_counter < 1) {
                 if (content == "") {
-                    command_temp = "schedule function func:1" +content + "t append";
+                    command_temp = "schedule function func:1" + content + "t append";
                 }
                 else {
                     std::string temp = std::string(temp);
@@ -293,7 +294,12 @@ std::string command_creation(int command_type, std::string content, int program_
 
         // Random
         case 7:
-            
+            if (version == "1.20.2" || "1.20.3") {
+
+            }
+            else {
+
+            }
             break;
         
         // GUI
