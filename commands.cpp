@@ -242,7 +242,7 @@ std::string command_creation(int command_type, std::string content, int program_
             command_temp = "execute as @s at @s run say " + content + "\n";
 
             if (if_toggle = true) {
-                command_temp1 = "function funcs:if_" + if_counter + '_' + std::to_string(command_count()) + "[ NEW_COMMAND]";
+                command_temp1 = "function funcs:if_" + if_counter + '_' + std::to_string(command_count()) + "[ NEW_COMMAND ]";
             }
             else if (if_toggle = false) {
                 command_temp1 = "function funcs:" + std::to_string(command_count()) + "[ NEW_COMMAND ]";
