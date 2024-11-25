@@ -52,6 +52,13 @@ int main(int argc, char* argv[]) {
     int program_count = 0;
     code = code_words(code_vector, 0, commands_vector, 0, command_type);
     
+    std::vector<std::string> result;
+    std::stringstream ss(str);
+    std::string token;
+    while (std::getline(ss, token, delimiter)) {
+        result.push_back(token);
+    }
+
     while (control <= file) {
         
     }
