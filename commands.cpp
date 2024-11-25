@@ -22,12 +22,7 @@ std::vector<std::string> code_words(std::vector<std::string> program_vector, int
     std::string if_chunk;
 
     std::string switch_var = program_vector[program_count];
-    if (if_statement_toggle = 0) {
-        next_func = "function functions:";
-    }
-    else {
-        next_func = "function functions:if";
-    }
+    next_func = "function functions:";
     while (program_count <= program_vector.size()) {
         // VARIABLES
         if (program_vector[program_count] == "var" || vectorcontainsword(program_vector[program_count], variables, 2)) {
