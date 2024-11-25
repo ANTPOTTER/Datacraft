@@ -50,8 +50,11 @@ int main(int argc, char* argv[]) {
 
     // Comment
     int program_count = 0;
-    code_words(code_vector, 0, commands_vector, 0, command_type);
-
+    code = code_words(code_vector, 0, commands_vector, 0, command_type);
+    
+    while (control <= file) {
+        
+    }
 
 
 
