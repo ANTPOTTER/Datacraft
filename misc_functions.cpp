@@ -19,11 +19,6 @@ std::string replace(std::string str, int oldSubstr, int newSubstr) {
     return str;
 }
 
-int command_count() {
-    static int counter = 0;
-    return counter++;
-}
-
 std::string processVectorUntilChar(const std::vector<std::string>& vec, int startIndex, std::string targetChar) {
     std::string result;
     for (size_t i = startIndex; i < vec.size(); ++i) {
@@ -138,4 +133,28 @@ std::vector<std::string> splitByNthOccurrence(const std::string& str, char delim
         result.push_back(current);
     }
     return result;
+}
+
+bool isInt(const std::string& str) {
+    if (str.empty()) return false;
+    size_t i = (str[0] == '-') ? 1 : 0;
+    return i < str.size() && std::all_of(str.begin() + i, str.end(), ::isdigit);
+}
+
+bool isFloat(const std::string& str) {
+    if (str.empty()) return false;
+    std::istringstream ss(str);
+    float f;
+    ss >> f;
+    return ss.eof() && !ss.fail();
+}
+
+int checkType(const std::string& str) {
+    if (isInt(str)) {
+        return 0;
+    } else if (isFloat(str)) {
+        return 1;
+    } else {
+        return 2;
+    }
 }
