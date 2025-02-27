@@ -31,5 +31,8 @@ bool vectorcontainsword(std::string str, std::vector<std::string> vector, int sk
 std::string concatenateVector(const std::vector<std::string>& vec);
 std::vector<std::string> splitString(const std::string& str, char splitter);
 std::vector<std::string> splitByNthOccurrence(const std::string& str, char delimiter, int n);
+bool isInt(const std::string& str);
+bool isFloat(const std::string& str);
+int checkType(const std::string& str);
 
 #endif
